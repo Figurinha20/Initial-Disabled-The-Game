@@ -1,0 +1,99 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "D013856C-D60F-4B60-8196-842DA0C6A31D",
+			"type": "TorusBufferGeometry",
+			"radius": 1,
+			"tube": 0.4,
+			"radialSegments": 36,
+			"tubularSegments": 10,
+			"arc": 6.283185
+		},
+		{
+			"uuid": "C94716E9-2BBE-4ED1-A44E-426A93EA2FF1",
+			"type": "TorusBufferGeometry",
+			"radius": 1,
+			"tube": 0.4,
+			"radialSegments": 36,
+			"tubularSegments": 8,
+			"arc": 6.283185
+		}],
+	"materials": [
+		{
+			"uuid": "DF35C644-EAF8-4F01-AA52-3B10E104CD60",
+			"type": "MeshStandardMaterial",
+			"color": 16777215,
+			"roughness": 1,
+			"metalness": 0,
+			"emissive": 10395294,
+			"flatShading": true,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		}],
+	"object": {
+		"uuid": "8056D7DB-CF2C-4342-8C5D-331F3B54DA43",
+		"type": "Group",
+		"name": "Stadium",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "331FB3EA-A7DE-4BDE-A628-29676D99B90F",
+				"type": "Mesh",
+				"name": "StadiumBase",
+				"castShadow": true,
+				"receiveShadow": true,
+				"layers": 1,
+				"matrix": [0,0,5,0,-6.666667,0,0,0,0,-24,0,0,0.103525,-8.092595,0,1],
+				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
+				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+			},
+			{
+				"uuid": "92328EE1-CC10-4459-833D-C85AA51D82D0",
+				"type": "Mesh",
+				"name": "StadiumLayer1",
+				"castShadow": true,
+				"receiveShadow": true,
+				"layers": 1,
+				"matrix": [0,0,6,0,-8,0,0,0,0,-24,0,0,0.103525,-7.756871,0,1],
+				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
+				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+			},
+			{
+				"uuid": "9208D0C3-15AA-4419-946F-3950CCACAA2F",
+				"type": "Mesh",
+				"name": "StadiumLayer2",
+				"castShadow": true,
+				"receiveShadow": true,
+				"layers": 1,
+				"matrix": [0,0,7,0,-9.333333,0,0,0,0,-28,0,0,0.103525,-8.697799,0,1],
+				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
+				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+			},
+			{
+				"uuid": "8202DF3E-BFCB-41F1-9164-00C7C96308D3",
+				"type": "Mesh",
+				"name": "StadiumLayer3",
+				"castShadow": true,
+				"receiveShadow": true,
+				"layers": 1,
+				"matrix": [0,0,8,0,-10.666667,0,0,0,0,-32,0,0,0.103525,-9.809523,0,1],
+				"geometry": "C94716E9-2BBE-4ED1-A44E-426A93EA2FF1",
+				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+			}]
+	}
+}

@@ -33,14 +33,36 @@ window.onload = function init() {
     // Lights
     let pointLight = new THREE.PointLight(0xffffff);
     pointLight.position.set(0, 300, 200);
+    pointLight.castShadow = true
     scene.add(pointLight);
 
     let ambientLight = new THREE.AmbientLight(0x111111);
+    ambientLight.castShadow = true
     scene.add(ambientLight);
 
-    // Floor
-    let gridXZ = new THREE.GridHelper(5000, 50, 0xff0000, 0xffffff);
-    scene.add(gridXZ);
+    let spotLight = new THREE.SpotLight( 0xffffff );
+    spotLight.position.set( 40, 100, 0 );
+
+    spotLight.castShadow = true;
+
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+
+    spotLight.shadow.camera.near = 500;
+    spotLight.shadow.camera.far = 4000;
+    spotLight.shadow.camera.fov = 30;
+
+    scene.add( spotLight );
+    
+    //floor
+    let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
+    let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
+    let plane = new THREE.Mesh( geometry, material );
+    plane.rotation.set(Math.PI/2,0,0)
+    plane.position.set(0,-1,0)
+    scene.add( plane );
+
+
 
     //add Track
     let loader = new THREE.ObjectLoader();
@@ -55,6 +77,30 @@ window.onload = function init() {
             // Add the loaded object to the scene
             scene.add( track );
             track.scale.set(140,140,140)
+
+        },
+    
+        // onProgress callback
+        function ( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+    
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened' );
+        }
+    );
+
+    loader.load(
+        // resource URL
+        "models/stadium.json",
+    
+        // onLoad callback
+        // Here the loaded data is assumed to be an object
+        function ( stadium ) {
+            // Add the loaded object to the scene
+            scene.add( stadium );
+            stadium.scale.set(180,100,180)
         },
     
         // onProgress callback
@@ -128,6 +174,7 @@ function render() {
         console.log(speed)
     requestAnimationFrame(render);
 }
+
 
 
 document.onkeydown = function handleKeyDown(event) {
