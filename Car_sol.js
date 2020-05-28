@@ -141,6 +141,7 @@ window.onload = function init() {
 let pos = new THREE.Vector3(0, 0, 0);
 // car angle: by default, the car is facing +Z direction
 // so, add a rotation of PI to make the car facing -Z direction
+
 let angle = Math.PI;
 let speed = 0;
 
@@ -149,10 +150,20 @@ function render() {
         // sets the toycar object with the updated position
         //car.position.set(pos.x, pos.y, pos.z);
 
+
         // rotates the car by angle radians
         car.rotation.y = angle;
 
-        speed > 0 ? speed -= 0.02 : speed < 0 ? speed += 0.02 : speed = 0;
+
+        if(speed > 0){
+            speed -= speed*0.01
+        }
+        if(speed < 0){
+            speed += speed*0.01
+        }
+        if(speed < 0.1 && speed > -0.1){
+            speed = 0
+        }
 
         car.position.x += speed * Math.sin(angle)
         car.position.z += speed * Math.cos(angle)
@@ -166,41 +177,113 @@ function render() {
         camera1.lookAt(car.position);
     }
 
-    if (camera1isActive)
+    if (camera1isActive){
         renderer.render(scene, camera1);
-    else
+    }else{
         renderer.render(scene, camera2);
-
-        console.log(speed)
+    }
     requestAnimationFrame(render);
 }
 
 
 
-document.onkeydown = function handleKeyDown(event) {
-    event.preventDefault();
-    console.log(event.keyCode)
 
-    if (event.keyCode == 37 && speed != 0)    // LEFT
-        angle += 0.06;
-    if (event.keyCode == 39 && speed !=0)    // RIGHT
-        angle -= 0.06;
+let keysPressed = {
+    arrowUp: false,
+    arrowDown: false,
+    arrowLeft: false,
+    arrowRight: false
+};
 
-    if (event.keyCode == 40)    //DOWN
-    {
-        speed -= 0.1;
-        // if (speed < 0)
-        //     speed = 0;
+document.addEventListener('keyup', (e) => {
+    switch (e.key) {
+        case 'ArrowUp':
+            keysPressed.arrowUp = false;
+            break;
+        case 'ArrowDown':
+            keysPressed.arrowDown = false;
+            break;
+        case 'ArrowLeft':
+            keysPressed.arrowLeft = false;
+            break;
+        case 'ArrowRight':
+            keysPressed.arrowRight = false;
+            break;
+        default:
+            break;
     }
-    if (event.keyCode == 38)    // UP
-    {
-        speed += 0.1;
-        if (speed > 5)
-            speed = 5;
+    console.log(e.key);
+    
+    console.log(keysPressed);
+    
+});
+
+document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    switch (e.key) {
+        case 'ArrowUp':
+            keysPressed.arrowUp = true;
+            break;
+    
+        case 'ArrowDown':
+            keysPressed.arrowDown = true;
+            break;
+        case 'ArrowLeft':
+            keysPressed.arrowLeft = true;
+            break;
+        case 'ArrowRight':
+            keysPressed.arrowRight = true;
+            break;
+        default:
+            break;
+    }
+    
+    if (keysPressed.arrowUp == true) {
+        forwardSpeed()
+    }
+    if (keysPressed.arrowDown == true) {
+        backwardSpeed()
     }
 
-    if (event.keyCode == 49)    //1
+
+    if (keysPressed.arrowLeft == true && speed != 0) {
+        turnLeft()
+    }
+    if (keysPressed.arrowRight == true && speed != 0) {
+        turnRight()
+    }
+
+    function forwardSpeed(){
+        speed += 0.2;
+        if (speed > 6){
+            speed = 6;
+        }
+    }
+    function backwardSpeed(){
+        speed -= 0.2;
+        if (speed > 3){
+            speed = 3;
+        }
+    }
+
+    function turnLeft(){
+        angle += 0.04;
+    }
+    function turnRight(){
+        angle -= 0.04; 
+    }
+
+
+    console.log(keysPressed);
+
+
+
+    if (e.keyCode == 49){    //1
         camera1isActive = true;
-    if (event.keyCode == 50)    //2
+    }
+    if (e.keyCode == 50){    //2
         camera1isActive = false;
-}
+    }
+});
+
+
