@@ -1,8 +1,19 @@
+//Raycaster detetar track para dar slow down
+//colisão com o estádio, e maybe dar-lhe uma textura de jeito
+//adicionar player 2
+
+
+
 let renderer = null,
     scene = null,
     camera1 = null,
     camera2 = null,
     car;   // The three.js object that represents the model
+
+let track, stadium, plane;
+
+let raycaster = new THREE.Raycaster();
+
 
 let camera1isActive = true;
 
@@ -57,10 +68,12 @@ window.onload = function init() {
     //floor
     let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
     let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
-    let plane = new THREE.Mesh( geometry, material );
+    plane = new THREE.Mesh( geometry, material );
     plane.rotation.set(Math.PI/2,0,0)
     plane.position.set(0,-1,0)
     scene.add( plane );
+
+
 
 
 
@@ -73,7 +86,8 @@ window.onload = function init() {
     
         // onLoad callback
         // Here the loaded data is assumed to be an object
-        function ( track ) {
+        function ( object ) {
+            track = object;
             // Add the loaded object to the scene
             scene.add( track );
             track.scale.set(140,140,140)
@@ -97,7 +111,8 @@ window.onload = function init() {
     
         // onLoad callback
         // Here the loaded data is assumed to be an object
-        function ( stadium ) {
+        function ( object ) {
+            stadium = object;
             // Add the loaded object to the scene
             scene.add( stadium );
             stadium.scale.set(180,100,180)
@@ -150,6 +165,11 @@ function render() {
         // sets the toycar object with the updated position
         //car.position.set(pos.x, pos.y, pos.z);
 
+       
+        raycaster.set ( /*origin*/ {x: car.position.x ,y: 2,z: car.position.z} , /*direction*/  {x: 0,y: -1,z: 0} )
+        raycaster.intersectObject ( /*object*/ track, false);
+        console.log(raycaster.intersectObject ( /*object*/ track, false));
+        
 
         // rotates the car by angle radians
         car.rotation.y = angle;
@@ -211,15 +231,13 @@ document.addEventListener('keyup', (e) => {
             break;
         default:
             break;
-    }
-    console.log(e.key);
-    
-    console.log(keysPressed);
-    
+    }  
 });
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
+
+    
     switch (e.key) {
         case 'ArrowUp':
             keysPressed.arrowUp = true;
@@ -257,24 +275,25 @@ document.addEventListener('keydown', (e) => {
         speed += 0.2;
         if (speed > 6){
             speed = 6;
+        }else if(speed < 0){
+            speed = 6
         }
     }
     function backwardSpeed(){
         speed -= 0.2;
-        if (speed > 3){
-            speed = 3;
+        if (speed < -3){
+            speed = -3;
+        }else if(speed > 0){
+            speed = 6
         }
     }
 
     function turnLeft(){
-        angle += 0.04;
+        angle += 0.06;
     }
     function turnRight(){
-        angle -= 0.04; 
+        angle -= 0.06; 
     }
-
-
-    console.log(keysPressed);
 
 
 
