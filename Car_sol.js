@@ -13,6 +13,8 @@ let renderer = null,
 let track, stadium, plane;
 
 let raycaster = new THREE.Raycaster();
+let rayDirection = new THREE.Vector3( 0, -1, 0 );
+let intersects;
 
 
 let camera1isActive = true;
@@ -165,12 +167,14 @@ function render() {
         // sets the toycar object with the updated position
         //car.position.set(pos.x, pos.y, pos.z);
 
-       
-        raycaster.set ( /*origin*/ {x: car.position.x ,y: 2,z: car.position.z} , /*direction*/  {x: 0,y: -1,z: 0} )
-        raycaster.intersectObject ( /*object*/ track, false);
-        console.log(raycaster.intersectObject ( /*object*/ track, false));
         
+        //Colisoes usando RayCaster
+        raycaster.set( car.position, rayDirection );
+        // calculate objects intersecting the picking ray
+        intersects = raycaster.intersectObject( track );
 
+        console.log(intersects);
+        
         // rotates the car by angle radians
         car.rotation.y = angle;
 
