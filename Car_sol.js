@@ -173,7 +173,7 @@ function render() {
         // calculate objects intersecting the picking ray
         intersects = raycaster.intersectObject( track );
 
-        console.log(intersects);
+        console.log(car.position);
         
         // rotates the car by angle radians
         car.rotation.y = angle;
@@ -189,8 +189,14 @@ function render() {
             speed = 0
         }
 
-        car.position.x += speed * Math.sin(angle)
-        car.position.z += speed * Math.cos(angle)
+        car.position.x += speed * Math.sin(angle);
+        car.position.z += speed * Math.cos(angle);
+
+        if(car.position.z >= 640 || car.position.z <= -640 || car.position.x >= 750 || car.position.x <= -750){
+            car.position.x -= speed * Math.sin(angle);
+            car.position.z -= speed * Math.cos(angle);
+            speed*=-0.2;
+        }
 
         //update camera 2
         let relativeCameraOffset = new THREE.Vector3(0, 150, -250);
