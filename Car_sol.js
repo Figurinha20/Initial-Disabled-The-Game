@@ -176,6 +176,15 @@ function render() {
         // calculate objects intersecting the picking ray
         intersects = raycaster.intersectObject( track, true );
 
+        console.log(intersects)
+
+        //interseção com relva (diminui speed)
+        if (intersects.length != 0){
+            speed*=0.95
+            console.log("oi")
+        }
+
+
         // rotates the car by angle radians
         car.rotation.y = angle;
 
@@ -195,14 +204,10 @@ function render() {
         car.position.x += speed * Math.sin(angle);
         car.position.z += speed * Math.cos(angle);
 
-
-        //reset de intersects
-        intersects = [];
-        intersects = raycaster.intersectObject( stadium, true );
         //colisão com coliseu
-        if(intersects != []){
-            car.position.x -= speed * Math.sin(angle);
-            car.position.z -= speed * Math.cos(angle);
+        if(car.position.z >= 610 || car.position.z <= -610 || car.position.x >= 720 || car.position.x <= -720){
+            car.position.x -= speed*3 * Math.sin(angle);
+            car.position.z -= speed *3 * Math.cos(angle);
             speed*=-0.2;
         }
 
