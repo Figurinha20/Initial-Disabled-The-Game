@@ -171,9 +171,9 @@ function render() {
         //Colisoes usando RayCaster
         raycaster.set( car.position, rayDirection );
         // calculate objects intersecting the picking ray
-        intersects = raycaster.intersectObject( track );
+        intersects = raycaster.intersectObject( track, true );
 
-        console.log(car.position);
+        console.log(intersects);
         
         // rotates the car by angle radians
         car.rotation.y = angle;
