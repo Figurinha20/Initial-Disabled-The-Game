@@ -170,29 +170,37 @@ function render() {
         
         //Colisoes usando RayCaster
         raycaster.set( car.position, rayDirection );
+
+        //reset de intersects
+        intersects = [];
         // calculate objects intersecting the picking ray
         intersects = raycaster.intersectObject( track, true );
 
-        console.log(intersects);
-        
         // rotates the car by angle radians
         car.rotation.y = angle;
 
 
+        //tentar fazer a speed realista...
         if(speed > 0){
-            speed -= speed*0.01
+            speed -= speed*0.01;
         }
         if(speed < 0){
-            speed += speed*0.01
+            speed += speed*0.01;
         }
         if(speed < 0.1 && speed > -0.1){
-            speed = 0
+            speed = 0;
         }
 
+        //atualização da posição
         car.position.x += speed * Math.sin(angle);
         car.position.z += speed * Math.cos(angle);
 
-        if(car.position.z >= 640 || car.position.z <= -640 || car.position.x >= 750 || car.position.x <= -750){
+
+        //reset de intersects
+        intersects = [];
+        intersects = raycaster.intersectObject( stadium, true );
+        //colisão com coliseu
+        if(intersects != []){
             car.position.x -= speed * Math.sin(angle);
             car.position.z -= speed * Math.cos(angle);
             speed*=-0.2;
