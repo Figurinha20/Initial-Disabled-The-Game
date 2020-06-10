@@ -174,14 +174,14 @@ function render() {
         //reset de intersects
         intersects = [];
         // calculate objects intersecting the picking ray
-        intersects = raycaster.intersectObject( track, true );
+        intersects = raycaster.intersectObjects( track.children, true );
 
         console.log(intersects)
 
         //interseção com relva (diminui speed)
-        if (intersects.length != 0){
-            speed*=0.95
-            console.log("oi")
+        if (intersects.length == 0){
+            speed*=0.98
+            console.log("On Grass")
         }
 
 
