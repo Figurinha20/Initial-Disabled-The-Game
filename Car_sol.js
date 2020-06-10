@@ -11,6 +11,8 @@ let renderer = null,
     car;   // The three.js object that represents the model
 
 let track, stadium, plane;
+let laps = 0;
+let checkpoints = 0;
 
 let raycaster = new THREE.Raycaster();
 let rayDirection = new THREE.Vector3( 0, -1, 0 );
@@ -178,12 +180,10 @@ function render() {
 
         console.log(intersects)
 
-        //interseção com relva (diminui speed)
+        //interseção com relva (diminui speed, por agora não faz nada, raycaster parece ser muito unreliable)
         if (intersects.length == 0){
-            speed*=0.98
             console.log("On Grass")
         }
-
 
         // rotates the car by angle radians
         car.rotation.y = angle;
@@ -210,6 +210,9 @@ function render() {
             car.position.z -= speed *3 * Math.cos(angle);
             speed*=-0.2;
         }
+
+        console.log(car.position)
+        //Checkpoint e Laps | 3 Laps = Win | 4 Checkpoints = 1 Lap
 
         //update camera 2
         let relativeCameraOffset = new THREE.Vector3(0, 150, -250);
