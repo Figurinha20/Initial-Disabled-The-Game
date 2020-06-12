@@ -10,16 +10,73 @@ let renderer = null,
     camera2 = null,
     car;   // The three.js object that represents the model
 
-let track, stadium, plane;
+let track, stadium, plane, checkpointObj;
 let laps = 0;
-let checkpoints = 0;
+let activeCheckpoint = 0;
+let collision = false;
 
 let raycaster = new THREE.Raycaster();
 let rayDirection = new THREE.Vector3( 0, -1, 0 );
 let intersects;
 
-
 let camera1isActive = true;
+
+//colisões?
+let BBox;
+let BBox2;
+
+
+function createCheckpoint(checkpoint){
+    
+    scene.remove (checkpointObj);
+
+    let geometry = new THREE.CylinderGeometry(65, 65, 25, 32);
+    let material = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.4, transparent: true} );
+    checkpointObj = new THREE.Mesh( geometry, material );
+    console.log("Checkpoints:" + checkpoint + " | Laps:" + laps + "/3")
+
+    switch(checkpoint) {
+        case 0:
+          checkpointObj.position.z = 118;
+          break;
+        case 1:
+            checkpointObj.position.x = -450;
+            checkpointObj.position.z = -100;
+          break;
+        case 2:
+            checkpointObj.position.z = -380;
+          break;
+        case 3:
+            checkpointObj.position.x = 450;
+            checkpointObj.position.z = -85;
+           break;
+        default:
+          console.log("The Checkpoints Broke")
+      }
+
+    scene.add(checkpointObj);
+}
+
+function checkCheckpointColision(){
+    BBox = new THREE.Box3().setFromObject(car);
+    BBox2 = new THREE.Box3().setFromObject(checkpointObj);
+
+    collision = BBox.intersectsBox(BBox2); // checks collision between mesh and othermesh
+
+    if (collision==true){
+        if(activeCheckpoint<3){
+            activeCheckpoint++
+        }
+        else{
+            activeCheckpoint = 0
+            laps++
+        }
+    }
+
+    if (laps==3 && activeCheckpoint==1){
+        console.log("You Won!")
+    }
+}
 
 window.onload = function init() {
     // Create the Three.js renderer
@@ -76,8 +133,6 @@ window.onload = function init() {
     plane.rotation.set(Math.PI/2,0,0)
     plane.position.set(0,-1,0)
     scene.add( plane );
-
-
 
 
 
@@ -148,7 +203,6 @@ window.onload = function init() {
         });
     });
 
-
     // let controls = new THREE.OrbitControls(camera);
     // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
@@ -168,21 +222,22 @@ function render() {
     if (car != undefined) {
         // sets the toycar object with the updated position
         //car.position.set(pos.x, pos.y, pos.z);
-
         
         //Colisoes usando RayCaster
-        raycaster.set( car.position, rayDirection );
+        let origin = car.position.clone();
+        origin.y += 5;
+        raycaster.set(origin, rayDirection)
 
         //reset de intersects
         intersects = [];
         // calculate objects intersecting the picking ray
         intersects = raycaster.intersectObjects( track.children, true );
 
-        console.log(intersects)
 
         //interseção com relva (diminui speed, por agora não faz nada, raycaster parece ser muito unreliable)
         if (intersects.length == 0){
             console.log("On Grass")
+            speed=speed*0.98
         }
 
         // rotates the car by angle radians
@@ -211,7 +266,6 @@ function render() {
             speed*=-0.2;
         }
 
-        console.log(car.position)
         //Checkpoint e Laps | 3 Laps = Win | 4 Checkpoints = 1 Lap
 
         //update camera 2
@@ -221,7 +275,11 @@ function render() {
         camera2.lookAt(car.position);
         //update camera 1
         camera1.lookAt(car.position);
+
+        createCheckpoint(activeCheckpoint);
+        checkCheckpointColision();
     }
+
 
     if (camera1isActive){
         renderer.render(scene, camera1);
@@ -320,7 +378,6 @@ document.addEventListener('keydown', (e) => {
     function turnRight(){
         angle -= 0.06; 
     }
-
 
 
     if (e.keyCode == 49){    //1
