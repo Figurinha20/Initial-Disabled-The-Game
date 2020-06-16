@@ -6,6 +6,9 @@ let renderer = null,
 
 let track, stadium, plane, checkpointObj;
 
+//textures
+let texTrack = new THREE.TextureLoader().load("./images/texture.JPG");
+let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 
 //background
 let textureCube = new THREE.CubeTextureLoader().setPath( 'cube/' ).load( 
@@ -81,6 +84,9 @@ window.onload = function init() {
     spotLight.shadow.camera.fov = 30;
 
     scene.add( spotLight );
+
+    //Shadows
+    renderer.shadowMap.enabled = true;
 
     
     //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
