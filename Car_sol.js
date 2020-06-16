@@ -33,7 +33,7 @@ function createCheckpoint(checkpoint){
     let geometry = new THREE.CylinderGeometry(65, 65, 25, 32);
     let material = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.4, transparent: true} );
     checkpointObj = new THREE.Mesh( geometry, material );
-    console.log("Checkpoints:" + checkpoint + " | Laps:" + laps + "/3")
+    //console.log("Checkpoints:" + checkpoint + " | Laps:" + laps + "/3")
 
     switch(checkpoint) {
         case 0:
@@ -234,26 +234,16 @@ function render() {
         intersects = raycaster.intersectObjects( track.children, true );
 
 
-        //interseção com relva (diminui speed, por agora não faz nada, raycaster parece ser muito unreliable)
-        if (intersects.length == 0){
-            console.log("On Grass")
-            speed=speed*0.98
-        }
+        
 
         // rotates the car by angle radians
         car.rotation.y = angle;
 
+        manageMovement();
 
-        //tentar fazer a speed realista...
-        if(speed > 0){
-            speed -= speed*0.01;
-        }
-        if(speed < 0){
-            speed += speed*0.01;
-        }
-        if(speed < 0.1 && speed > -0.1){
-            speed = 0;
-        }
+        //atrito
+        atrition();
+
 
         //atualização da posição
         car.position.x += speed * Math.sin(angle);
@@ -320,7 +310,6 @@ document.addEventListener('keyup', (e) => {
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
-
     
     switch (e.key) {
         case 'ArrowUp':
@@ -338,37 +327,44 @@ document.addEventListener('keydown', (e) => {
             break;
         default:
             break;
+    }    
+
+    if (e.keyCode == 49){    //1
+        camera1isActive = true;
     }
+    if (e.keyCode == 50){    //2
+        camera1isActive = false;
+    }
+});
+
+
+function manageMovement(){
     
     if (keysPressed.arrowUp == true) {
-        forwardSpeed()
+        forwardSpeed();
     }
     if (keysPressed.arrowDown == true) {
-        backwardSpeed()
+        backwardSpeed();
     }
 
 
     if (keysPressed.arrowLeft == true && speed != 0) {
-        turnLeft()
+        turnLeft();
     }
     if (keysPressed.arrowRight == true && speed != 0) {
-        turnRight()
+        turnRight();
     }
 
     function forwardSpeed(){
-        speed += 0.2;
+        speed += 0.15;
         if (speed > 6){
             speed = 6;
-        }else if(speed < 0){
-            speed = 6
         }
     }
     function backwardSpeed(){
-        speed -= 0.2;
+        speed -= 0.15;
         if (speed < -3){
             speed = -3;
-        }else if(speed > 0){
-            speed = 6
         }
     }
 
@@ -378,14 +374,23 @@ document.addEventListener('keydown', (e) => {
     function turnRight(){
         angle -= 0.06; 
     }
+}
 
+function atrition(){
+  //interseção com relva (diminui speed drásticamente)
+        if (intersects.length == 0){
+            speed=speed*0.85;
+        }
 
-    if (e.keyCode == 49){    //1
-        camera1isActive = true;
-    }
-    if (e.keyCode == 50){    //2
-        camera1isActive = false;
-    }
-});
+        if(speed > 0){
+            speed -= speed*0.03;
+        }
+        if(speed < 0){
+            speed += speed*0.03;
+        }
+        if(speed < 0.07 && speed > -0.07){
+            speed = 0;
+        }
+}
 
 
