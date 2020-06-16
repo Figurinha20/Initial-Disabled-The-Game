@@ -332,8 +332,8 @@ function manageMovement(){
     }
     function backwardSpeed(){
         speed -= 0.15;
-        if (speed < -3){
-            speed = -3;
+        if (speed < -1){
+            speed = -1;
         }
     }
 
@@ -346,7 +346,7 @@ function manageMovement(){
 }
 
 function atrition(){
-  //interseção com relva (diminui speed drásticamente)
+  //interseção com relva (diminui speed drasticamente)
         if (intersects.length == 0){
             speed=speed*0.85;
         }
