@@ -90,7 +90,11 @@ window.onload = function init() {
 
     
     //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
-    let texture = new THREE.TextureLoader().load("./images/grass.jpg");
+    let texture = new THREE.TextureLoader().load("./images/texture.JPG");
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set( 200, 200 );
+
     let material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide} )
     
     //floor
