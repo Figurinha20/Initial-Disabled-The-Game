@@ -6,10 +6,6 @@ let renderer = null,
 
 let track, stadium, plane, checkpointObj;
 
-//textures
-let texTrack = new THREE.TextureLoader().load("./images/texture.JPG");
-let texGRASS = new THREE.TextureLoader().load("./images/texture.JPG");
-let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 
 //background
 let textureCube = new THREE.CubeTextureLoader().setPath( 'cube/' ).load( 
@@ -87,10 +83,16 @@ window.onload = function init() {
     scene.add( spotLight );
 
     
+    //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
+    let texture = new THREE.TextureLoader().load("./images/grass.jpg");
+    let material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide} )
+    
     //floor
     let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
-    //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
-    plane = new THREE.Mesh( geometry, texGRASS );
+    plane = new THREE.Mesh( geometry, material );
+
+    plane.receiveShadow = true;
+
     plane.rotation.set(Math.PI/2,0,0)
     plane.position.set(0,-1,0)
     scene.add( plane );
