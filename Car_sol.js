@@ -7,7 +7,7 @@ let renderer = null,
 let track, stadium, plane, checkpointObj;
 
 //textures
-let texTrack = new THREE.TextureLoader().load("./images/texture.JPG");
+let texTrack = new THREE.TextureLoader().load("./images/texTrack.png");
 let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 
 //background
@@ -98,7 +98,7 @@ window.onload = function init() {
 
     
     //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
-    let texture = new THREE.TextureLoader().load("./images/texture.JPG");
+    let texture = new THREE.TextureLoader().load("./images/grass.jpg");
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set( 200, 200 );
