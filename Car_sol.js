@@ -85,6 +85,9 @@ window.onload = function init() {
 
     scene.add( spotLight );
 
+    //Shadows
+    renderer.shadowMap.enabled = true;
+
     
     //floor
     let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
