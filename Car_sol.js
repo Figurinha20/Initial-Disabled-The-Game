@@ -62,28 +62,36 @@ window.onload = function init() {
     scene.add(camera2);
 
     // Lights
-    let pointLight = new THREE.PointLight(0xffffff);
+
+        //directional light
+    let moonlight = new THREE.DirectionalLight( "#e1fafc", 0.3 );
+    moonlight.castShadow = true;
+    scene.add( moonlight );
+
+
+
+   /* let pointLight = new THREE.PointLight(0xffffff);
     pointLight.position.set(0, 300, 200);
     pointLight.castShadow = true
-    scene.add(pointLight);
+    scene.add(pointLight);*/
 
-    let ambientLight = new THREE.AmbientLight(0x111111);
+    /*let ambientLight = new THREE.AmbientLight(0x111111);
     ambientLight.castShadow = true
-    scene.add(ambientLight);
+    scene.add(ambientLight);*/
 
-    let spotLight = new THREE.SpotLight( 0xffffff );
-    spotLight.position.set( 40, 100, 0 );
+    
+    let spotLightRight = new THREE.SpotLight( 0xffffff, 0.8 , 800 , Math.PI/2 , 0.3, 0.5 );
+    spotLightRight.position.set( 500, 200, 200 );
+    
+    spotLightRight.castShadow = false;
 
-    spotLight.castShadow = true;
+    let spotLightLeft = new THREE.SpotLight( 0xffffff, 0.8 , 800 , -Math.PI/2 , 0.3, 0.5 );
+    spotLightLeft.position.set(-500, 200, 200);
+    
+    spotLightLeft.castShadow = false;
 
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
-
-    spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 4000;
-    spotLight.shadow.camera.fov = 30;
-
-    scene.add( spotLight );
+    scene.add( spotLightRight );
+    scene.add( spotLightLeft );
 
     //Shadows
     renderer.shadowMap.enabled = true;
@@ -95,7 +103,7 @@ window.onload = function init() {
     texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set( 200, 200 );
 
-    let material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide} )
+    let material = new THREE.MeshPhongMaterial( { map: texture, side: THREE.DoubleSide} )
     
     //floor
     let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
@@ -103,9 +111,10 @@ window.onload = function init() {
 
     plane.receiveShadow = true;
 
-    plane.rotation.set(Math.PI/2,0,0)
+    plane.rotation.set(3*Math.PI/2,0,0)
     plane.position.set(0,-1,0)
     scene.add( plane );
+    
 
 
 
@@ -120,6 +129,8 @@ window.onload = function init() {
         // Here the loaded data is assumed to be an object
         function ( object ) {
             track = object;
+            track.receiveShadow = true;
+
             // Add the loaded object to the scene
             scene.add( track );
             track.scale.set(140,140,140)
@@ -148,6 +159,7 @@ window.onload = function init() {
             // Add the loaded object to the scene
             scene.add( stadium );
             stadium.scale.set(180,100,180)
+            stadium.position.set(0,-30,0)
         },
     
         // onProgress callback
@@ -170,6 +182,8 @@ window.onload = function init() {
         loader.load('./models/toycar.obj', function (object) {
             car = object;
             car.scale.set(0.2, 0.2, 0.2);
+            car.receiveShadow = true;
+            car.castShadow = true;
             //let axes = new THREE.AxesHelper(100);
             //car.add(axes)
             scene.add(car);
@@ -193,6 +207,7 @@ let speed = 0;
 
 function render() {
     if (car != undefined) {
+        
         // sets the toycar object with the updated position
         //car.position.set(pos.x, pos.y, pos.z);
         

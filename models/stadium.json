@@ -25,13 +25,69 @@
 		}],
 	"materials": [
 		{
-			"uuid": "DF35C644-EAF8-4F01-AA52-3B10E104CD60",
-			"type": "MeshStandardMaterial",
+			"uuid": "A633930D-E7D3-4AFA-8208-E6F6406176AC",
+			"type": "MeshPhongMaterial",
 			"color": 16777215,
-			"roughness": 1,
-			"metalness": 0,
-			"emissive": 10395294,
-			"flatShading": true,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "696FACEF-D74A-4D28-BFBA-A687D9C37C43",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "DE12BDAB-C1F9-4008-AFCC-1194F58431E7",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "4C441A55-95F5-4578-9EC0-A3428BCB55FC",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
 			"depthFunc": 3,
 			"depthTest": true,
 			"depthWrite": true,
@@ -60,7 +116,7 @@
 				"layers": 1,
 				"matrix": [0,0,5,0,-6.666667,0,0,0,0,-24,0,0,0.103525,-8.092595,0,1],
 				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
-				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+				"material": "A633930D-E7D3-4AFA-8208-E6F6406176AC"
 			},
 			{
 				"uuid": "92328EE1-CC10-4459-833D-C85AA51D82D0",
@@ -71,7 +127,7 @@
 				"layers": 1,
 				"matrix": [0,0,6,0,-8,0,0,0,0,-24,0,0,0.103525,-7.756871,0,1],
 				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
-				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+				"material": "696FACEF-D74A-4D28-BFBA-A687D9C37C43"
 			},
 			{
 				"uuid": "9208D0C3-15AA-4419-946F-3950CCACAA2F",
@@ -82,7 +138,7 @@
 				"layers": 1,
 				"matrix": [0,0,7,0,-9.333333,0,0,0,0,-28,0,0,0.103525,-8.697799,0,1],
 				"geometry": "D013856C-D60F-4B60-8196-842DA0C6A31D",
-				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+				"material": "DE12BDAB-C1F9-4008-AFCC-1194F58431E7"
 			},
 			{
 				"uuid": "8202DF3E-BFCB-41F1-9164-00C7C96308D3",
@@ -93,7 +149,7 @@
 				"layers": 1,
 				"matrix": [0,0,8,0,-10.666667,0,0,0,0,-32,0,0,0.103525,-9.809523,0,1],
 				"geometry": "C94716E9-2BBE-4ED1-A44E-426A93EA2FF1",
-				"material": "DF35C644-EAF8-4F01-AA52-3B10E104CD60"
+				"material": "4C441A55-95F5-4578-9EC0-A3428BCB55FC"
 			}]
 	}
 }
