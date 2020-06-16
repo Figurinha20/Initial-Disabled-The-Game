@@ -1,0 +1,48 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "07B9DC3A-69AD-45E3-A841-DA4DACE5E378",
+			"type": "BoxBufferGeometry",
+			"name": "tvScreen",
+			"width": 1.5,
+			"height": 0.9,
+			"depth": 0.2,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		}],
+	"materials": [
+		{
+			"uuid": "C62C102B-3024-4DC4-88E9-364B538A4CA5",
+			"type": "MeshPhongMaterial",
+			"color": 0,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		}],
+	"object": {
+		"uuid": "C794B2C4-7952-4F89-91A7-C4E4C3FA1B0C",
+		"type": "Mesh",
+		"name": "tvScreen",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.333446,1.101334,1.781539,1],
+		"geometry": "07B9DC3A-69AD-45E3-A841-DA4DACE5E378",
+		"material": "C62C102B-3024-4DC4-88E9-364B538A4CA5"
+	}
+}

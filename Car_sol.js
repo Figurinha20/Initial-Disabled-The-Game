@@ -91,7 +91,7 @@ window.onload = function init() {
     spotLightLeft.castShadow = false;
 
     let spotLight = new THREE.SpotLight( 0xffffff, 1 , 800);
-    spotLight.position.set( 0, 200, 200 );
+    spotLight.position.set( 0, 500, 200 );
     spotLight.castShadow = true;
 
     spotLight.shadow.bias = 0.0001;
@@ -161,6 +161,38 @@ window.onload = function init() {
             // Add the loaded object to the scene
             scene.add( track );
             track.scale.set(140,140,140)
+
+        },
+    
+        // onProgress callback
+        function ( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+    
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened' );
+        }
+    );
+
+
+
+    //add TV
+
+    loader.load(
+        // resource URL
+        "models/tv.json",
+    
+        // onLoad callback
+        // Here the loaded data is assumed to be an object
+        function ( object ) {
+            tv = object;
+
+            tv.scale.set(140, 140, 140);
+            tv.position.set(0, 140, -740);
+
+            // Add the loaded object to the scene
+            scene.add( tv );
 
         },
     
