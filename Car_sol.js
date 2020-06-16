@@ -1,9 +1,3 @@
-//Raycaster detetar track para dar slow down
-//colisão com o estádio, e maybe dar-lhe uma textura de jeito
-//adicionar player 2
-
-
-
 let renderer = null,
     scene = null,
     camera1 = null,
@@ -11,6 +5,17 @@ let renderer = null,
     car;   // The three.js object that represents the model
 
 let track, stadium, plane, checkpointObj;
+
+//textures
+let texTrack = new THREE.TextureLoader().load("./images/texture.JPG");
+let texGRASS = new THREE.TextureLoader().load("./images/texture.JPG");
+let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
+
+//background
+let textureCube = new THREE.CubeTextureLoader().setPath( 'cube/' ).load( 
+    [ 'left.JPG', 'right.JPG', 'top.JPG', 'bottom.JPG', 'front.JPG', 'back.JPG' ] ); 
+
+
 let laps = 0;
 let activeCheckpoint = 0;
 let collision = false;
@@ -26,57 +31,8 @@ let BBox;
 let BBox2;
 
 
-function createCheckpoint(checkpoint){
-    
-    scene.remove (checkpointObj);
 
-    let geometry = new THREE.CylinderGeometry(65, 65, 25, 32);
-    let material = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.4, transparent: true} );
-    checkpointObj = new THREE.Mesh( geometry, material );
-    //console.log("Checkpoints:" + checkpoint + " | Laps:" + laps + "/3")
 
-    switch(checkpoint) {
-        case 0:
-          checkpointObj.position.z = 118;
-          break;
-        case 1:
-            checkpointObj.position.x = -450;
-            checkpointObj.position.z = -100;
-          break;
-        case 2:
-            checkpointObj.position.z = -380;
-          break;
-        case 3:
-            checkpointObj.position.x = 450;
-            checkpointObj.position.z = -85;
-           break;
-        default:
-          console.log("The Checkpoints Broke")
-      }
-
-    scene.add(checkpointObj);
-}
-
-function checkCheckpointColision(){
-    BBox = new THREE.Box3().setFromObject(car);
-    BBox2 = new THREE.Box3().setFromObject(checkpointObj);
-
-    collision = BBox.intersectsBox(BBox2); // checks collision between mesh and othermesh
-
-    if (collision==true){
-        if(activeCheckpoint<3){
-            activeCheckpoint++
-        }
-        else{
-            activeCheckpoint = 0
-            laps++
-        }
-    }
-
-    if (laps==3 && activeCheckpoint==1){
-        console.log("You Won!")
-    }
-}
 
 window.onload = function init() {
     // Create the Three.js renderer
@@ -88,6 +44,10 @@ window.onload = function init() {
 
     // Create a new Three.js scene
     scene = new THREE.Scene();
+
+    // Adicionar background
+    scene.background = textureCube;
+
 
     // Add TWO cameras 
     camera1 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
@@ -125,11 +85,12 @@ window.onload = function init() {
     spotLight.shadow.camera.fov = 30;
 
     scene.add( spotLight );
+
     
     //floor
     let geometry = new THREE.PlaneGeometry( 9000, 9000, 0 );
-    let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
-    plane = new THREE.Mesh( geometry, material );
+    //let material = new THREE.MeshBasicMaterial( {color: "#33cc0c", side: THREE.DoubleSide} );
+    plane = new THREE.Mesh( geometry, texGRASS );
     plane.rotation.set(Math.PI/2,0,0)
     plane.position.set(0,-1,0)
     scene.add( plane );
@@ -391,6 +352,58 @@ function atrition(){
         if(speed < 0.07 && speed > -0.07){
             speed = 0;
         }
+}
+
+function createCheckpoint(checkpoint){
+    
+    scene.remove (checkpointObj);
+
+    let geometry = new THREE.CylinderGeometry(65, 65, 25, 32);
+    let material = new THREE.MeshBasicMaterial( {color: 0xffff00, opacity: 0.4, transparent: true} );
+    checkpointObj = new THREE.Mesh( geometry, material );
+    //console.log("Checkpoints:" + checkpoint + " | Laps:" + laps + "/3")
+
+    switch(checkpoint) {
+        case 0:
+          checkpointObj.position.z = 118;
+          break;
+        case 1:
+            checkpointObj.position.x = -450;
+            checkpointObj.position.z = -100;
+          break;
+        case 2:
+            checkpointObj.position.z = -380;
+          break;
+        case 3:
+            checkpointObj.position.x = 450;
+            checkpointObj.position.z = -85;
+           break;
+        default:
+          console.log("The Checkpoints Broke")
+      }
+
+    scene.add(checkpointObj);
+}
+
+function checkCheckpointColision(){
+    BBox = new THREE.Box3().setFromObject(car);
+    BBox2 = new THREE.Box3().setFromObject(checkpointObj);
+
+    collision = BBox.intersectsBox(BBox2); // checks collision between mesh and othermesh
+
+    if (collision==true){
+        if(activeCheckpoint<3){
+            activeCheckpoint++
+        }
+        else{
+            activeCheckpoint = 0
+            laps++
+        }
+    }
+
+    if (laps==3 && activeCheckpoint==1){
+        console.log("You Won!")
+    }
 }
 
 
