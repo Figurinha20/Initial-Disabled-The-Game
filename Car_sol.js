@@ -175,8 +175,6 @@ window.onload = function init() {
         }
     );
 
-
-
     //add TV
 
     loader.load(
