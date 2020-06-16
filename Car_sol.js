@@ -90,8 +90,35 @@ window.onload = function init() {
     
     spotLightLeft.castShadow = false;
 
+    let spotLight = new THREE.SpotLight( 0xffffff, 1 , 800);
+    spotLight.position.set( 0, 200, 200 );
+    spotLight.castShadow = true;
+
+    spotLight.shadow.bias = 0.0001;
+    spotLight.shadow.mapSize.width = 400;
+    spotLight.shadow.mapSize.height = 400;
+
+    spotLightLeft.castShadow = false;
+
+
+
+
+
+
+
+
+    //scene.spotLight.target = car;
+
+
+
+
+
+
+
+
     scene.add( spotLightRight );
     scene.add( spotLightLeft );
+    scene.add( spotLight );
 
     //Shadows
     renderer.shadowMap.enabled = true;
@@ -185,6 +212,7 @@ window.onload = function init() {
             car.receiveShadow = true;
             car.castShadow = true;
             //let axes = new THREE.AxesHelper(100);
+            
             //car.add(axes)
             scene.add(car);
         });
@@ -193,6 +221,7 @@ window.onload = function init() {
     // let controls = new THREE.OrbitControls(camera);
     // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
+    
     // Run the run loop
     render();
 }
@@ -253,6 +282,7 @@ function render() {
         camera2.lookAt(car.position);
         //update camera 1
         camera1.lookAt(car.position);
+
 
         createCheckpoint(activeCheckpoint);
         checkCheckpointColision();
