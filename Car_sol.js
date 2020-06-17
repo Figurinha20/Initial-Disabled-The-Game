@@ -10,9 +10,7 @@ let track, stadium, plane, checkpointObj;
 let texTrack = new THREE.TextureLoader().load("./images/texTrack.png");
 let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 
-//background
-let textureCube = new THREE.CubeTextureLoader().setPath( 'cube/' ).load( 
-    [ 'left.JPG', 'right.JPG', 'top.JPG', 'bottom.JPG', 'front.JPG', 'back.JPG' ] ); 
+
 
 
 let laps = 0;
@@ -45,8 +43,32 @@ window.onload = function init() {
     scene = new THREE.Scene();
 
     // Adicionar background
-    scene.background = textureCube;
+    //background
+   
+   
+    let textureCube = new THREE.CubeTextureLoader().setPath( './cube/' ).load(
+            [ 'left.JPG', 'right.JPG', 'top.JPG', 'bottom.JPG', 'front.JPG', 'back.JPG' ] ,
+        // onLoad callback
+        // Here the loaded data is assumed to be an object
+        function ( object ) {
+           console.log("sucess");
 
+           
+        },
+    
+        // onProgress callback
+        function ( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+    
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened' );
+        }
+    );
+        console.log(scene.background);
+        
+    scene.background = textureCube;
 
     // Add TWO cameras 
     camera1 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
@@ -70,15 +92,7 @@ window.onload = function init() {
 
 
 
-   /* let pointLight = new THREE.PointLight(0xffffff);
-    pointLight.position.set(0, 300, 200);
-    pointLight.castShadow = true
-    scene.add(pointLight);*/
-
-    /*let ambientLight = new THREE.AmbientLight(0x111111);
-    ambientLight.castShadow = true
-    scene.add(ambientLight);*/
-
+  
     
     let spotLightRight = new THREE.SpotLight( 0xffffff, 0.8 , 800 , Math.PI/2 , 0.3, 0.5 );
     spotLightRight.position.set( 500, 200, 200 );
@@ -90,35 +104,21 @@ window.onload = function init() {
     
     spotLightLeft.castShadow = false;
 
-    let spotLight = new THREE.SpotLight( 0xffffff, 1 , 800);
+    let spotLight = new THREE.SpotLight( 0xffffff, 1 , 1500 , Math.PI/16 , 0.9, 0.3 );
     spotLight.position.set( 0, 500, 200 );
     spotLight.castShadow = true;
 
-    spotLight.shadow.bias = 0.0001;
     spotLight.shadow.mapSize.width = 400;
     spotLight.shadow.mapSize.height = 400;
 
-    spotLightLeft.castShadow = false;
-
-
-
-
-
-
-
-
-    //scene.spotLight.target = car;
-
-
-
-
-
-
-
+    spotLight.castShadow = false;
 
     scene.add( spotLightRight );
     scene.add( spotLightLeft );
     scene.add( spotLight );
+
+    
+
 
     //Shadows
     renderer.shadowMap.enabled = true;
@@ -147,6 +147,8 @@ window.onload = function init() {
 
     //add Track
     let loader = new THREE.ObjectLoader();
+
+    
 
     loader.load(
         // resource URL
@@ -214,9 +216,10 @@ window.onload = function init() {
         function ( object ) {
             stadium = object;
             // Add the loaded object to the scene
+            
+            stadium.scale.set(180,100,180);
+            stadium.position.set(0,-90,0);
             scene.add( stadium );
-            stadium.scale.set(180,100,180)
-            stadium.position.set(0,-30,0)
         },
     
         // onProgress callback
@@ -245,6 +248,8 @@ window.onload = function init() {
             
             //car.add(axes)
             scene.add(car);
+            
+            spotLight.target = car;
         });
     });
 
