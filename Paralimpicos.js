@@ -10,6 +10,7 @@ let track, stadium, plane, checkpointObj;
 let texTrack = new THREE.TextureLoader().load("./images/texTrack.png");
 let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 let loaderCar = new THREE.OBJLoader();
+var loaderCarMaterial = new THREE.MaterialLoader();
 
 let laps = 0;
 let activeCheckpoint = 0;
@@ -233,16 +234,36 @@ window.onload = function init() {
         './models/quickieTHREE.obj',
         // called when resource is loaded
         function (object) {
-            car = object
-            car.scale.set(0.15, 0.15, 0.15);
+            car = object;
+            car.scale.set(0.12, 0.12, 0.12);
             car.receiveShadow = true;
             car.castShadow = true;
-            //let axes = new THREE.AxesHelper(100);
+            
+            car.children[9].material.side = THREE.DoubleSide; //para aparecer a parte de trás da cadeira e a parte de dentro das rodas
+            car.children[10].material[0].side = THREE.DoubleSide;
+            car.children[11].material[1].side = THREE.DoubleSide;
 
-            //car.add(axes)
+            //dar cor aos materiais
+            car.children[4].material[0].color = {r:0, g:0, b:0};
+            car.children[4].material[1].color = {r:48, g:49, b:51};
+
+            car.children[6].material[0].color = {r:52, g:95, b:156};
+            car.children[6].material[1].color = {r:0, g:0, b:0};
+
+            car.children[7].material[2].color = {r:0, g:0, b:0};
+
+            car.children[8].material[0].color = {r:0, g:0, b:0};
+
+            car.children[9].material.color = {r:0, g:0, b:0};
+
+            car.children[10].material[1].color = {r:0, g:0, b:0};
+            
+            car.children[11].material[1].color = {r:0, g:0, b:0};
+
             scene.add(car);
 
             spotLight.target = car;
+
             console.log(car)
         },
         // called when loading is in progresses
@@ -356,9 +377,6 @@ function render() {
     requestAnimationFrame(render);
 }
 
-
-
-
 let keysPressed = {
     arrowUp: false,
     arrowDown: false,
@@ -458,7 +476,7 @@ function manageMovement() {
 function atrition() {
     //interseção com relva (diminui speed drasticamente)
     if (intersects.length == 0) {
-        speed = speed * 0.85;
+        speed = speed * 0.9;
     }
     if (speed > 0) {
         speed -= speed * 0.03;
