@@ -9,6 +9,7 @@ let track, stadium, plane, checkpointObj;
 //textures
 let texTrack = new THREE.TextureLoader().load("./images/texTrack.png");
 let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
+let loaderCar = new THREE.OBJLoader();
 
 let laps = 0;
 let activeCheckpoint = 0;
@@ -225,15 +226,15 @@ window.onload = function init() {
         }
     );
 
-    // Car model
-    let mtlLoader = new THREE.MTLLoader();
-    mtlLoader.load('./models/toycar.mtl', function (materials) {
-        materials.preload();
-        let loader = new THREE.OBJLoader();
-        loader.setMaterials(materials);
-        loader.load('./models/toycar.obj', function (object) {
-            car = object;
-            car.scale.set(0.2, 0.2, 0.2);
+
+    // load a resource
+    loaderCar.load(
+        // resource URL
+        './models/quickieTHREE.obj',
+        // called when resource is loaded
+        function (object) {
+            car = object
+            car.scale.set(0.15, 0.15, 0.15);
             car.receiveShadow = true;
             car.castShadow = true;
             //let axes = new THREE.AxesHelper(100);
@@ -242,8 +243,22 @@ window.onload = function init() {
             scene.add(car);
 
             spotLight.target = car;
-        });
-    });
+            console.log(car)
+        },
+        // called when loading is in progresses
+        function (xhr) {
+
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+
+        },
+        // called when loading has errors
+        function (error) {
+
+            console.log('An error happened');
+
+        }
+    );
+
 
     //Escrever texto inicial
     fontLoader.load('./fonts/Hemi Head Rg_Bold Italic.json', function (font) {
@@ -254,13 +269,15 @@ window.onload = function init() {
             height: 3,
             curveSegments: 12,
         });
-        
-        let textMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-        screenText = new THREE.Mesh( text, textMaterial );
-        scene.add( screenText );
-        screenText.position.x=-90
-        screenText.position.y=126;
-        screenText.position.z=-690;
+
+        let textMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffff00
+        });
+        screenText = new THREE.Mesh(text, textMaterial);
+        scene.add(screenText);
+        screenText.position.x = -90
+        screenText.position.y = 126;
+        screenText.position.z = -690;
     });
 
     // let controls = new THREE.OrbitControls(camera);
@@ -506,20 +523,22 @@ function checkCheckpointColision() {
 
             //escrever novo texto
             fontLoader.load('./fonts/Hemi Head Rg_Bold Italic.json', function (font) {
-        
+
                 text = new THREE.TextGeometry(`Laps ${laps}/3`, {
                     font: font,
                     size: 29,
                     height: 3,
                     curveSegments: 12,
                 });
-                
-                let textMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-                screenText = new THREE.Mesh( text, textMaterial );
-                scene.add( screenText );
-                screenText.position.x=-80-5*laps;
-                screenText.position.y=126;
-                screenText.position.z=-690;
+
+                let textMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xffff00
+                });
+                screenText = new THREE.Mesh(text, textMaterial);
+                scene.add(screenText);
+                screenText.position.x = -80 - 5 * laps;
+                screenText.position.y = 126;
+                screenText.position.z = -690;
             });
         }
     }
@@ -529,20 +548,21 @@ function checkCheckpointColision() {
         scene.remove(screenText);
         //Jogo ganho! Escrever texto final
         fontLoader.load('./fonts/Hemi Head Rg_Bold Italic.json', function (font) {
-    
+
             text = new THREE.TextGeometry(`You Won`, {
                 font: font,
                 size: 29,
                 height: 3,
                 curveSegments: 12,
             });
-            
-            let textMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-            screenText = new THREE.Mesh( text, textMaterial );
-            scene.add( screenText );
-            screenText.position.x=-92;
-            screenText.position.y=126;
-            screenText.position.z=-690;
-        });
-    }
+
+            let textMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00
+            });
+            screenText = new THREE.Mesh(text, textMaterial);
+            scene.add(screenText);
+            screenText.position.x = -92;
+            screenText.position.y = 126;
+            screenText.position.z = -690;
+        });   }
 }
