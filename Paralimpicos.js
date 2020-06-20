@@ -10,13 +10,13 @@ let track, stadium, plane, checkpointObj;
 let texTrack = new THREE.TextureLoader().load("./images/texTrack.png");
 let texMarbleStadium = new THREE.TextureLoader().load("./images/texture.JPG");
 let loaderCar = new THREE.OBJLoader();
-var loaderCarMaterial = new THREE.MaterialLoader();
+let loaderCarMaterial = new THREE.MaterialLoader();
 
 let laps = 0;
 let activeCheckpoint = 0;
 let collision = false;
 let text, screenText;
-
+let a = new THREE.Vector3( 0, 0, 0 )
 
 let raycaster = new THREE.Raycaster();
 let fontLoader = new THREE.FontLoader();
@@ -241,7 +241,7 @@ window.onload = function init() {
             
             car.children[9].material.side = THREE.DoubleSide; //para aparecer a parte de trás da cadeira e a parte de dentro das rodas
             car.children[10].material[0].side = THREE.DoubleSide;
-            car.children[11].material[1].side = THREE.DoubleSide;
+            car.children[11].material[0].side = THREE.DoubleSide;
 
             //dar cor aos materiais
             car.children[4].material[0].color = {r:0, g:0, b:0};
@@ -260,8 +260,19 @@ window.onload = function init() {
             
             car.children[11].material[1].color = {r:0, g:0, b:0};
 
+            //mudar a posição das rodas para poder rodar no seu centro
+            car.children[10].position.y+=30
+            car.children[10].position.z-=30
+            
+            car.children[11].position.y+=18
+            car.children[11].position.z+=58
+
+            car.children[10].geometry.center();
+            car.children[11].geometry.center();
+
             scene.add(car);
 
+            car.position.z = 100
             spotLight.target = car;
 
             console.log(car)
@@ -441,7 +452,12 @@ function manageMovement() {
     if (keysPressed.arrowDown == true) {
         backwardSpeed();
     }
-
+    
+    //rodar as rodas
+    if (speed != 0) {
+        car.children[10].rotation.x +=0.08*speed;
+        car.children[11].rotation.x +=0.165*speed; 
+    }
 
     if (keysPressed.arrowLeft == true && speed != 0) {
         turnLeft();
