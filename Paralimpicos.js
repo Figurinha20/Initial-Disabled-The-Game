@@ -16,7 +16,7 @@ let laps = 0;
 let activeCheckpoint = 0;
 let collision = false;
 let text, screenText;
-let a = new THREE.Vector3( 0, 0, 0 )
+let a = new THREE.Vector3(0, 0, 0)
 
 let raycaster = new THREE.Raycaster();
 let fontLoader = new THREE.FontLoader();
@@ -42,31 +42,16 @@ window.onload = function init() {
 
     // Adicionar background
     //background
-
-
-    let textureCube = new THREE.CubeTextureLoader().setPath('./cube/').load(
-        ['left.JPG', 'right.JPG', 'top.JPG', 'bottom.JPG', 'front.JPG', 'back.JPG'],
-        // onLoad callback
-        // Here the loaded data is assumed to be an object
-        function (object) {
-            console.log("sucess");
-
-
-        },
-
-        // onProgress callback
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-
-        // onError callback
-        function (err) {
-            console.error('An error happened');
-        }
-    );
-    console.log(scene.background);
-
-    scene.background = textureCube;
+    scene.background = new THREE.CubeTextureLoader()
+        .setPath('./cube/')
+        .load([
+            'left.JPG',
+            'right.JPG',
+            'top.JPG',
+            'bottom.JPG',
+            'front.JPG',
+            'back.JPG'
+        ]);
 
     // Add TWO cameras 
     camera1 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
@@ -238,34 +223,82 @@ window.onload = function init() {
             car.scale.set(0.12, 0.12, 0.12);
             car.receiveShadow = true;
             car.castShadow = true;
-            
+
             car.children[9].material.side = THREE.DoubleSide; //para aparecer a parte de trás da cadeira e a parte de dentro das rodas
             car.children[10].material[0].side = THREE.DoubleSide;
             car.children[11].material[0].side = THREE.DoubleSide;
 
             //dar cor aos materiais
-            car.children[4].material[0].color = {r:0, g:0, b:0};
-            car.children[4].material[1].color = {r:48, g:49, b:51};
+            car.children[4].material[0].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
+            car.children[4].material[1].color = {
+                r: 48,
+                g: 49,
+                b: 51
+            };
 
-            car.children[6].material[0].color = {r:52, g:95, b:156};
-            car.children[6].material[1].color = {r:0, g:0, b:0};
+            car.children[5].material[1].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
-            car.children[7].material[2].color = {r:0, g:0, b:0};
+            car.children[6].material[0].color = {
+                r: 52,
+                g: 95,
+                b: 156
+            };
+            car.children[6].material[1].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
-            car.children[8].material[0].color = {r:0, g:0, b:0};
+            car.children[7].material[2].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
-            car.children[9].material.color = {r:0, g:0, b:0};
+            car.children[8].material[0].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
-            car.children[10].material[1].color = {r:0, g:0, b:0};
-            
-            car.children[11].material[1].color = {r:0, g:0, b:0};
+            car.children[9].material.color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
+
+            car.children[10].material[1].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
+
+            car.children[11].material[1].color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
+
+            car.children[12].material.color = {
+                r: 0,
+                g: 0,
+                b: 0
+            };
 
             //mudar a posição das rodas para poder rodar no seu centro
-            car.children[10].position.y+=30
-            car.children[10].position.z-=30
-            
-            car.children[11].position.y+=18
-            car.children[11].position.z+=58
+            car.children[10].position.y += 30
+            car.children[10].position.z -= 30
+
+            car.children[11].position.y += 18
+            car.children[11].position.z += 58
 
             car.children[10].geometry.center();
             car.children[11].geometry.center();
@@ -452,11 +485,11 @@ function manageMovement() {
     if (keysPressed.arrowDown == true) {
         backwardSpeed();
     }
-    
+
     //rodar as rodas
     if (speed != 0) {
-        car.children[10].rotation.x +=0.08*speed;
-        car.children[11].rotation.x +=0.165*speed; 
+        car.children[10].rotation.x += 0.08 * speed;
+        car.children[11].rotation.x += 0.165 * speed;
     }
 
     if (keysPressed.arrowLeft == true && speed != 0) {
@@ -598,5 +631,6 @@ function checkCheckpointColision() {
             screenText.position.x = -92;
             screenText.position.y = 126;
             screenText.position.z = -690;
-        });   }
+        });
+    }
 }
