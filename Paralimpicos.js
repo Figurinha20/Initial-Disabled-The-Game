@@ -45,12 +45,12 @@ window.onload = function init() {
     scene.background = new THREE.CubeTextureLoader()
         .setPath('./cube/')
         .load([
-            'left.JPG',
-            'right.JPG',
-            'top.JPG',
-            'bottom.JPG',
-            'front.JPG',
-            'back.JPG'
+            'px.png',
+            'nx.png',
+            'py.png',
+            'ny.png',
+            'pz.png',
+            'nz.png'
         ]);
 
     // Add TWO cameras 
@@ -197,7 +197,7 @@ window.onload = function init() {
             // Add the loaded object to the scene
 
             stadium.scale.set(180, 100, 180);
-            stadium.position.set(0, -90, 0);
+            stadium.position.set(0, -100, 0);
             scene.add(stadium);
         },
 
@@ -303,10 +303,11 @@ window.onload = function init() {
             car.children[10].geometry.center();
             car.children[11].geometry.center();
 
+            car.position.z = 100;
+            
             scene.add(car);
-
-            car.position.z = 100
             spotLight.target = car;
+
 
             console.log(car)
         },
@@ -358,7 +359,7 @@ let pos = new THREE.Vector3(0, 0, 0);
 // car angle: by default, the car is facing +Z direction
 // so, add a rotation of PI to make the car facing -Z direction
 
-let angle = Math.PI;
+let angle = -Math.PI/2;
 let speed = 0;
 
 function render() {
@@ -400,7 +401,7 @@ function render() {
         //Checkpoint e Laps | 3 Laps = Win | 4 Checkpoints = 1 Lap
 
         //update camera 2
-        let relativeCameraOffset = new THREE.Vector3(0, 150, -250);
+        let relativeCameraOffset = new THREE.Vector3(0, 250, -500);
         let cameraOffset = relativeCameraOffset.applyMatrix4(car.matrixWorld);
         camera2.position.copy(cameraOffset);
         camera2.lookAt(car.position);
@@ -580,11 +581,15 @@ function checkCheckpointColision() {
     collision = BBox.intersectsBox(BBox2); // checks collision between mesh and othermesh
 
     if (collision == true) {
+        
         if (activeCheckpoint < 3) {
             activeCheckpoint++;
         } else {
             activeCheckpoint = 0;
-            laps++;
+
+            if(laps != 3){
+                laps++;
+            };
 
             scene.remove(screenText);
 
